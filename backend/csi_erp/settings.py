@@ -23,3 +23,6 @@ WSGI_APPLICATION = 'csi_erp.wsgi.application'
 DATABASES = { 'default': {'ENGINE':'django.db.backends.sqlite3','NAME': BASE_DIR / 'db.sqlite3'} }
 LANGUAGE_CODE='pt-br'; TIME_ZONE='America/Recife'; USE_I18N=True; USE_TZ=True
 STATIC_URL='static/'; DEFAULT_AUTO_FIELD='django.db.models.BigAutoField'
+ALLOWED_HOSTS = ['erp-osc-monorepo.onrender.com']
+
+CSRF_TRUSTED_ORIGINS = ['https://erp-osc-monorepo.onrender.com']
