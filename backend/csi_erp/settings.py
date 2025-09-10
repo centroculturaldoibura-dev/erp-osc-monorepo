@@ -31,3 +31,27 @@ import os
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# === Render/Docker: DB & Static files ===
+import os
+import dj_database_url
+
+# DEBUG via variável de ambiente (default: False em produção)
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+
+# Banco de dados: usa DATABASE_URL (Render) e cai para SQLite em dev
+DATABASES = {
+    "default": dj_database_url.config(
+        conn_max_age=600,
+        ssl_require=True,
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+    )
+}
+
+# Arquivos estáticos (WhiteNoise)
+STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# Respeitar HTTPS atrás do proxy do Render
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
